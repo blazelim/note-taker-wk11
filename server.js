@@ -29,21 +29,70 @@ app.get('/api/notes', (req, res) => {
     res.json(results);
 })
 
+// function for note validation
+function validateNote(note) {
+    if (!note.title || typeof note.title !== 'string') {
+      return false;
+    }
+    if (!note.body || typeof note.body !== 'string') {
+       return false;
+    }
+
+
+    return true;
+}
 // TODO function for updating notes
 
-// TODO function for creating notes
+// function for creating notes
+function createNewNote(body, savedDB) {
+    const note = body;
+    savedDB.push(body);
 
-// TODO function for find by id
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify({ notes: savedDB}, null, 2)
+    );
+    // return finished code to post route for response
+    return animal;
+}
 
-// TODO function for filter by query
+// function for find by id
+function findById(id, noteArray) {
+    const results = noteArray.filter(note => note.id === id)[0];
+    return results;
+};
 
 // api routes
-// TODO api route for entire database and query search
+// api route for entire database and query search
+app.get('/api/notes', (req,res) => {
+    let placeholderDB = savedDB;
+    res.json(placeholderDB);
+})
 
-// TODO api route for specific id
+// api route for specific id
+app.get('/api/notes/:id', (req, res) => {
+    const results = findById(req.params.id, savedDB);
+    if (results) {
+        res.json(results);
+    } else {
+        res.send(404);
+    }
+});
+// api post route
+app.post('/api/notes', (req, res) => {
 
-// TODO api post route
+    // set id based on what the next index of the array wil lbe
+    req.body.id = savedDB.length.toString();
 
+    // add note to json file and notes array in this function
+    if (!validateNote(req.body)) {
+        res.status(400).send('The note is not properly formatted.');
+    } else {
+    const note = createNewNote(req.body, savedDB);
+
+    res.json(note);
+}
+});
 // TODO api route for updating json
 
 
