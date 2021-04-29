@@ -37,8 +37,6 @@ function validateNote(note) {
     if (!note.body || typeof note.body !== 'string') {
        return false;
     }
-
-
     return true;
 }
 // TODO function for updating notes
@@ -53,7 +51,7 @@ function createNewNote(body, savedDB) {
         JSON.stringify({ notes: savedDB}, null, 2)
     );
     // return finished code to post route for response
-    return animal;
+    return note;
 }
 
 // function for find by id
