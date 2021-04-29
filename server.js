@@ -1,7 +1,7 @@
 const express = require('express');
 
 // import the database
-const {savedDB} = require('./db/db.json')
+const {notes} = require('./db/db')
 
 // need fs to save notes
 const fs = require('fs');
@@ -24,7 +24,7 @@ app.use(express.json());
 
 // api routes
 app.get('/api/notes', (req, res) => {
-    let results = savedNotes;
+    let results = notes;
 
     res.json(results);
 })
@@ -42,13 +42,13 @@ function validateNote(note) {
 // TODO function for updating notes
 
 // function for creating notes
-function createNewNote(body, savedDB) {
+function createNewNote(body, notes) {
     const note = body;
-    savedDB.push(body);
+    notes.push(body);
 
     fs.writeFileSync(
         path.join(__dirname, './db/db.json'),
-        JSON.stringify({ notes: savedDB}, null, 2)
+        JSON.stringify({ notes: notes}, null, 2)
     );
     // return finished code to post route for response
     return note;
@@ -63,30 +63,31 @@ function findById(id, noteArray) {
 // api routes
 // api route for entire database and query search
 app.get('/api/notes', (req,res) => {
-    let placeholderDB = savedDB;
+    let placeholderDB = notes;
     res.json(placeholderDB);
 })
 
 // api route for specific id
 app.get('/api/notes/:id', (req, res) => {
-    const results = findById(req.params.id, savedDB);
+    const results = findById(req.params.id, notes);
     if (results) {
         res.json(results);
     } else {
         res.send(404);
     }
 });
+
 // api post route
 app.post('/api/notes', (req, res) => {
 
     // set id based on what the next index of the array wil lbe
-    req.body.id = savedDB.length.toString();
+    req.body.id = notes.length.toString();
 
     // add note to json file and notes array in this function
     if (!validateNote(req.body)) {
         res.status(400).send('The note is not properly formatted.');
     } else {
-    const note = createNewNote(req.body, savedDB);
+    const note = createNewNote(req.body, notes);
 
     res.json(note);
 }
