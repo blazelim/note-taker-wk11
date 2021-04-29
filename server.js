@@ -1,5 +1,8 @@
 const express = require('express');
 
+// import the database
+const {savedDB} = require('./db/db.json')
+
 // need fs to save notes
 const fs = require('fs');
 
@@ -25,6 +28,23 @@ app.get('/api/notes', (req, res) => {
 
     res.json(results);
 })
+
+// TODO function for updating notes
+
+// TODO function for creating notes
+
+// TODO function for find by id
+
+// TODO function for filter by query
+
+// api routes
+// TODO api route for entire database and query search
+
+// TODO api route for specific id
+
+// TODO api post route
+
+// TODO api route for updating json
 
 
 // html routes
