@@ -29,17 +29,30 @@ app.get('/api/notes', (req, res) => {
     res.json(results);
 })
 
+// TODO function for deleting a note, get id, splice out of array, reset all id numbers 
+function idReassignment(objArray) {
+    let edittedArray = notes;
+    for (var i = 0; i < edittedArray.length; i++) {
+        let updatedIndex = i;
+        let stringifiedIndex = updatedIndex.toString();
+        edittedArray[i].id = stringifiedIndex;
+    }
+
+    return edittedArray;
+};
+
+
 // function for note validation
 function validateNote(note) {
-    if (!note.title || typeof note.title !== 'string') {
+    if (!note.title) {
       return false;
     }
-    if (!note.body || typeof note.body !== 'string') {
+    if (!note.text) {
        return false;
     }
     return true;
 }
-// TODO function for updating notes
+
 
 // function for creating notes
 function createNewNote(body, notes) {
@@ -84,15 +97,28 @@ app.post('/api/notes', (req, res) => {
     req.body.id = notes.length.toString();
 
     // add note to json file and notes array in this function
-    // if (!validateNote(req.body)) {
-    //     res.status(400).send('The note is not properly formatted.');
-    // } else {
+    if (!validateNote(req.body)) {
+        res.status(400).send('The note is not properly formatted.');
+    } else {
         const note = createNewNote(req.body, notes);
 
         res.json(note);
-    // }
+    }
 });
-// TODO api route for updating json
+
+// api delete route
+app.delete('/api/notes/:id', (req, res) => {
+    let target = req.params.id;
+    let oldNotesArray = notes;
+    let removedNotesArray = oldNotesArray.splice(target, 1);
+    let newNotesArray = idReassignment(removedNotesArray);
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify({ notes: newNotesArray}, null, 2)
+    );
+
+    res.json(newNotesArray);
+})
 
 
 // html routes
