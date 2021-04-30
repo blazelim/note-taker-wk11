@@ -80,17 +80,17 @@ app.get('/api/notes/:id', (req, res) => {
 // api post route
 app.post('/api/notes', (req, res) => {
 
-    // set id based on what the next index of the array wil lbe
+    // set id based on what the next index of the array will be
     req.body.id = notes.length.toString();
 
     // add note to json file and notes array in this function
-    if (!validateNote(req.body)) {
-        res.status(400).send('The note is not properly formatted.');
-    } else {
-    const note = createNewNote(req.body, notes);
+    // if (!validateNote(req.body)) {
+    //     res.status(400).send('The note is not properly formatted.');
+    // } else {
+        const note = createNewNote(req.body, notes);
 
-    res.json(note);
-}
+        res.json(note);
+    // }
 });
 // TODO api route for updating json
 
