@@ -29,7 +29,7 @@ app.get('/api/notes', (req, res) => {
     res.json(results);
 })
 
-// TODO function for deleting a note, get id, splice out of array, reset all id numbers 
+// function for deleting a note, get id, splice out of array, reset all id numbers 
 function idReassignment(objArray) {
     let edittedArray = notes;
     for (var i = 0; i < edittedArray.length; i++) {

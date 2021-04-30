@@ -1,3 +1,34 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "title": "Pet the dogs",
+      "text": "I have 3 dogs whose names are Boots, Coco, and Maple.",
+      "id": "0"
+    },
+    {
+      "title": "Brush the Schnauzer",
+      "text": "Maple is the Schnauzer. She gets her hair tangled every day",
+      "id": "1"
+    },
+    {
+      "title": "Deal with existence",
+      "text": "What is life?",
+      "id": "2"
+    },
+    {
+      "title": "What is love?",
+      "text": "Baby don't hurt me",
+      "id": "3"
+    },
+    {
+      "title": "Test Delete Function ->",
+      "text": "Even though I know you're going to try to delete all the other notes. *stares*",
+      "id": "4"
+    },
+    {
+      "title": "How is your day?",
+      "text": "Greetings, person grading my assignment.",
+      "id": "5"
+    }
+  ]
 }
